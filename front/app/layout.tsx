@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
+import { sfBold, sfLight, sfMed } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
@@ -37,8 +37,10 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen text-foreground bg-background font-sans antialiased",
-          fontSans.variable,
+          sfLight.variable,
+          sfMed.variable,
+          sfBold.variable,
+          "relative z-0 min-h-screen font-sf-med text-foreground bg-background antialiased",
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>

@@ -1,11 +1,16 @@
-import { Fira_Code as FontMono, Inter as FontSans } from "next/font/google";
+import localFont from "next/font/local";
 
-export const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+export const sfLight = localFont({
+  src: "../public/fonts/SFArabic-Light.ttf",
+  variable: "--font-sf-light",
 });
 
-export const fontMono = FontMono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+export const sfMed = localFont({
+  src: "../public/fonts/SFArabic-Medium.ttf",
+  variable: "--font-sf-medium",
+});
+
+export const sfBold = localFont({
+  src: "../public/fonts/SFArabic-Bold.ttf",
+  variable: "--font-sf-bold",
 });
