@@ -18,6 +18,7 @@ export default function Home() {
         <div className={subtitle({ class: "mt-4" })}>
           Beautiful, fast and modern React UI library.
         </div>
+        <div className="text-secondary_text">Hello dude</div>
       </div>
 
       <div className="flex gap-3">
