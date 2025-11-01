@@ -1,11 +1,17 @@
-export interface User {
-  id: string;
-  name: string;
+import { Address } from '#src/types/address.type.js';
+import { Document } from 'mongoose';
+
+export interface User extends Document {
+  fullName: string;
+  phone: string;
   email: string;
-  createdAt: Date;
+  role: 'customer' | 'seller' | 'admin';
+  address: Address;
+  isVerified: boolean;
+  status: 'active' | 'banned';
 }
 
 export interface CreateUserDto {
-  name: string;
-  email: string;
+  fullName: string;
+  phone: string;
 }
