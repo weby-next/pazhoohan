@@ -29,8 +29,8 @@ export const createApp = (): Express => {
 
   app.use(morganMiddleware);
 
-  app.get('/start', (_req, _res) => {
-    return _res.json('Hello world');
+  app.get('/start', (_req, res) => {
+    return res.json('Hello world');
   });
 
   app.use('/api', healthcheckRoutes);

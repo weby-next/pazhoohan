@@ -1,6 +1,7 @@
 import { createApp } from './app.js';
 import { ENV } from '#src/config/env.js';
 import { logger } from '#src/middlewares/logger.js';
+import connectToDB from './config/db.js';
 
 const startServer = () => {
   const app = createApp();
@@ -9,6 +10,8 @@ const startServer = () => {
     logger.info(`Server started on port ${ENV.PORT}`);
     logger.info(`Environment: ${ENV.NODE_ENV}`);
   });
+
+  connectToDB();
 
   // Graceful shutdown
   const gracefulShutdown = (signal: string) => {
