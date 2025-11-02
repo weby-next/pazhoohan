@@ -5,9 +5,8 @@ export interface User extends Document {
   fullName: string;
   phone: string;
   email: string;
-  role: 'customer' | 'seller' | 'admin';
-  address: Address;
-  isVerified: boolean;
+  role: ['customer' | 'seller' | 'admin'];
+  addresses?: Address[];
   status: 'active' | 'banned';
 }
 

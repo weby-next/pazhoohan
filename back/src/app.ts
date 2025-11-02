@@ -9,6 +9,7 @@ import { morganMiddleware } from '#src/middlewares/logger.js';
 import { AppError, errorHandler } from '#src/middlewares/error-handler.js';
 import healthcheckRoutes from '#src/modules/healthcheck/healthcheck.route.js';
 import userRoutes from '#src/modules/user/user.route.js';
+import { successHandler } from './middlewares/success-handler.js';
 
 export const createApp = (): Express => {
   const app = express();
@@ -29,8 +30,10 @@ export const createApp = (): Express => {
 
   app.use(morganMiddleware);
 
+  app.use(successHandler);
+
   app.get('/start', (_req, res) => {
-    return res.json('Hello world');
+    return res.success('server started successfuly');
   });
 
   app.use('/api', healthcheckRoutes);

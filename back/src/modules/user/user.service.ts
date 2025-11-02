@@ -25,9 +25,9 @@ export const userService = {
 
   // Create user
   createUser: async (data: CreateUserDto): Promise<User> => {
-    const existingUser = users.find((u) => u.email === data.email);
+    const existingUser = users.find((u) => u.phone === data.phone);
     if (existingUser) {
-      throw new AppError('User with this email already exists', 409);
+      throw new AppError('User with this phone already exists', 409);
     }
 
     const newUser: User = {
