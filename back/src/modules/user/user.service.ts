@@ -31,9 +31,7 @@ export const userService = {
     }
 
     const newUser: User = {
-      id: crypto.randomUUID(),
       ...data,
-      createdAt: new Date(),
     };
 
     users.push(newUser);

@@ -4,11 +4,12 @@ import compression from 'compression';
 import helmet from 'helmet';
 import hpp from 'hpp';
 
-import { ENV } from '#src/config/env.js';
+// import { ENV } from '#src/config/env.js';
 import { morganMiddleware } from '#src/middlewares/logger.js';
 import { AppError, errorHandler } from '#src/middlewares/error-handler.js';
 import healthcheckRoutes from '#src/modules/healthcheck/healthcheck.route.js';
 import userRoutes from '#src/modules/user/user.route.js';
+import authRoutes from '#src/modules/auth/auth.route.js';
 import { successHandler } from './middlewares/success-handler.js';
 
 export const createApp = (): Express => {
@@ -19,7 +20,6 @@ export const createApp = (): Express => {
 
   app.use(
     cors({
-      origin: ENV.CORS_ORIGIN,
       credentials: true,
     }),
   );
@@ -37,7 +37,8 @@ export const createApp = (): Express => {
   });
 
   app.use('/api', healthcheckRoutes);
-  app.use('/api', userRoutes);
+  app.use('/api/v1/users', userRoutes);
+  app.use('/api/v1/auth', authRoutes);
 
   app.use((_req, _res, next) => {
     next(new AppError('Route not found', 404));
