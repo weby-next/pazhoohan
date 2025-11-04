@@ -48,7 +48,6 @@ const userSchema = new mongoose.Schema<User>(
     email: {
       type: String,
       required: false,
-      unique: true,
     },
     role: {
       type: [String],

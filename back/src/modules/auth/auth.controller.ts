@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import { authService } from './auth.service.js';
 import { SendOtpInput, VerifyOtpInput } from './auth.schema.js';
 import sessionService from '#src/services/session.service.js';
+import { signAccessToken } from '#src/utils/token.js';
+import { setAuthCookies } from '#src/utils/cookies.js';
 
 const normalizeHeader = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
@@ -32,12 +34,18 @@ export const authController = {
       device: req.get('x-device-name') || undefined,
     });
 
+    const accessToken = signAccessToken(userId, session.sessionId);
+
+    const refreshToken = `${session.sessionId}.${session.refreshRaw}`;
+
+    setAuthCookies(res, refreshToken);
+
     res.success(
       {
         message: result.message,
         user,
+        accessToken,
         session: {
-          token: `${session.sessionId}.${session.refreshRaw}`,
           expiresIn: session.expiresIn,
         },
       },

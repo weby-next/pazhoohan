@@ -3,6 +3,7 @@ import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
 import hpp from 'hpp';
+import cookieParser from 'cookie-parser';
 
 // import { ENV } from '#src/config/env.js';
 import { morganMiddleware } from '#src/middlewares/logger.js';
@@ -20,21 +21,19 @@ export const createApp = (): Express => {
 
   app.use(
     cors({
+      // origin: ENV.CORS_ORIGIN,
       credentials: true,
     }),
   );
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
   app.use(compression());
-
   app.use(morganMiddleware);
-
   app.use(successHandler);
 
-  app.get('/start', (_req, res) => {
-    return res.success('server started successfuly');
-  });
+  app.get('/start', (_req, res) => res.success('server started successfully'));
 
   app.use('/api', healthcheckRoutes);
   app.use('/api/v1/users', userRoutes);
