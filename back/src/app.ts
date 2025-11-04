@@ -33,7 +33,7 @@ export const createApp = (): Express => {
   app.use(morganMiddleware);
   app.use(successHandler);
 
-  app.get('/start', (_req, res) => res.success('server started successfully'));
+  app.get('/', (_req, res) => res.success('server started successfully'));
 
   app.use('/api', healthcheckRoutes);
   app.use('/api/v1/users', userRoutes);

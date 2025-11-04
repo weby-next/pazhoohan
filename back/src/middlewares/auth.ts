@@ -10,7 +10,8 @@ const authMiddleware = async (req: Request, _res: Response, next: NextFunction) 
     if (!authHeader || !authHeader.startsWith('Bearer ')) throw new AppError('Missing or invalid Authorization header', 401);
 
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, ENV.JWT_ACCESS_SECRET) as { sub: string };
+    if (!token) throw new AppError('Missing access token', 401);
+    const decoded = jwt.verify(token, ENV.JWT_ACCESS_SECRET);
 
     const user = await userModel.findById(decoded.sub);
     if (!user) throw new AppError('User not found', 404);

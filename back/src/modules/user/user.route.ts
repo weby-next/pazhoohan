@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { userController } from './user.controller.js';
 import { validate } from '#src/middlewares/validate.js';
-import { createUserSchema, getUserByIdSchema, deleteUserSchema } from './user.schema.js';
+import { userIdSchema } from './user.schema.js';
+import authMiddleware from '#src/middlewares/auth.js';
+import { authorizeRole } from '#src/middlewares/authorize-role.js';
 
 const router = Router();
 
-router.get('/', userController.getAllUsers);
-router.get('/:id', validate(getUserByIdSchema), userController.getUserById);
-router.post('/', validate(createUserSchema), userController.createUser);
-router.delete('/:id', validate(deleteUserSchema), userController.deleteUser);
+router.patch('/:id/ban', authMiddleware, authorizeRole('admin'), validate(userIdSchema), userController.banUser);
+router.patch('/:id/unban', authMiddleware, authorizeRole('admin'), validate(userIdSchema), userController.unbanUser);
 
 export default router;

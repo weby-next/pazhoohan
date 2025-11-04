@@ -1,7 +1,7 @@
-import { User, CreateUserDto } from './user.types.js';
+import { User } from './user.types.js';
 import { AppError } from '#src/middlewares/error-handler.js';
+import userModel from './user.model.js';
 
-// In-memory database (replace with real database in production)
 const users: User[] = [];
 
 export const clearUsers = () => {
@@ -9,42 +9,31 @@ export const clearUsers = () => {
 };
 
 export const userService = {
-  // Get all users
-  getAllUsers: async (): Promise<User[]> => {
-    return users;
-  },
-
-  // Get user by ID
-  getUserById: async (id: string): Promise<User> => {
-    const user = users.find((u) => u.id === id);
+  banUser: async (id: string): Promise<void> => {
+    const user = await userModel.findById(id);
     if (!user) {
       throw new AppError('User not found', 404);
     }
-    return user;
-  },
 
-  // Create user
-  createUser: async (data: CreateUserDto): Promise<User> => {
-    const existingUser = users.find((u) => u.phone === data.phone);
-    if (existingUser) {
-      throw new AppError('User with this phone already exists', 409);
+    if (user.status === 'banned') {
+      throw new AppError('User is already banned', 409);
     }
 
-    const newUser: User = {
-      ...data,
-    };
-
-    users.push(newUser);
-    return newUser;
+    user.status = 'banned';
+    await user.save();
   },
 
-  // Delete user
-  deleteUser: async (id: string): Promise<void> => {
-    const userIndex = users.findIndex((u) => u.id === id);
-    if (userIndex === -1) {
+  unbanUser: async (id: string): Promise<void> => {
+    const user = await userModel.findById(id);
+    if (!user) {
       throw new AppError('User not found', 404);
     }
 
-    users.splice(userIndex, 1);
+    if (user.status === 'active') {
+      throw new AppError('User is already active', 409);
+    }
+
+    user.status = 'active';
+    await user.save();
   },
 };

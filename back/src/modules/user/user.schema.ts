@@ -7,18 +7,11 @@ export const createUserSchema = z.object({
   }),
 });
 
-export const getUserByIdSchema = z.object({
+export const userIdSchema = z.object({
   params: z.object({
-    id: z.uuid('Invalid user ID'),
-  }),
-});
-
-export const deleteUserSchema = z.object({
-  params: z.object({
-    id: z.uuid('Invalid user ID'),
+    id: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid user ID'),
   }),
 });
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
-export type GetUserByIdInput = z.infer<typeof getUserByIdSchema>;
-export type DeleteUserInput = z.infer<typeof deleteUserSchema>;
+export type UserIdInput = z.infer<typeof userIdSchema>;
