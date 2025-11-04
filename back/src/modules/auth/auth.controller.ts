@@ -52,4 +52,11 @@ export const authController = {
       'success',
     );
   },
+
+  getMe: async (req: Request, res: Response) => {
+    const userId = req.user;
+
+    const result = await authService.getMe(userId);
+    res.success(result, 'success');
+  },
 };

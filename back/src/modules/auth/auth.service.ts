@@ -56,4 +56,9 @@ export const authService = {
 
     return { message: 'OTP verified', user };
   },
+
+  getMe: async (id: string) => {
+    const user = await userModel.findById(id);
+    return { message: 'user fetched', user };
+  },
 };
