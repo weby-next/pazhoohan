@@ -15,17 +15,17 @@ export const clearUsers = () => {
 export const userService = {
   createAddress: async (data: Address, userId: User['_id']): Promise<Document | null> => {
     const province = provinces.find((p) => p.id === data.provinceId);
-    if (!province) {
-      throw new AppError('Province not found', 404);
-    }
+    if (!province) throw new AppError('Province not found', 404);
 
     const city = cities.find((c) => c.id === data.cityId);
-    if (!city) {
-      throw new AppError('City not found', 404);
-    }
+    if (!city) throw new AppError('City not found', 404);
 
     if (city.province_id !== province.id) {
       throw new AppError('City does not belong to the selected province', 400);
+    }
+
+    if (data.isDefault) {
+      await userModel.updateOne({ _id: userId, 'addresses.isDefault': true }, { $set: { 'addresses.$[].isDefault': false } });
     }
 
     const newAddress = await userModel.findByIdAndUpdate(userId, { $push: { addresses: data } }, { new: true });
