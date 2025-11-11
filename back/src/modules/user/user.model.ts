@@ -1,38 +1,6 @@
 import mongoose from 'mongoose';
 import { User } from './user.types.js';
-import { Address } from '#src/types/address.type.js';
-
-const addressSchema = new mongoose.Schema<Address>(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    postalCode: {
-      type: String,
-      required: true,
-    },
-    loc: {
-      lat: {
-        type: String,
-        required: true,
-      },
-      lng: {
-        type: String,
-        required: true,
-      },
-    },
-    addressLine: {
-      type: String,
-      required: true,
-    },
-    cityId: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true },
-);
+import addressSchemaModel from './address/address.model.js';
 
 const userSchema = new mongoose.Schema<User>(
   {
@@ -54,9 +22,7 @@ const userSchema = new mongoose.Schema<User>(
       enum: ['customer', 'seller', 'admin'],
       required: true,
     },
-    addresses: {
-      type: [addressSchema],
-    },
+    addresses: [addressSchemaModel],
     status: {
       type: String,
       enum: ['active', 'banned'],

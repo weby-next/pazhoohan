@@ -2,9 +2,11 @@ export interface Address extends Document {
   name: string;
   postalCode: string;
   loc: {
-    lat: string;
-    lng: string;
+    lat: number;
+    lng: number;
   };
   addressLine: string;
-  cityId: string;
+  provinceId: number;
+  cityId: number;
+  isDefault: boolean;
 }
