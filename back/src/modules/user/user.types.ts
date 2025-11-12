@@ -1,4 +1,4 @@
-import { Address } from '#src/types/address.type.js';
+import { Address } from '#src/modules/user/address/address.schema.js';
 import { Document } from 'mongoose';
 
 export interface User extends Document {

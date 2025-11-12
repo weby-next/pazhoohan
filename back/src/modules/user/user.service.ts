@@ -33,6 +33,38 @@ export const userService = {
     return newAddress;
   },
 
+  changeAddressToDefault: async (addressId: Address['_id'], userId: User['_id']): Promise<void> => {
+    const user = await userModel.findById(userId);
+    if (!user) throw new AppError('User not found', 404);
+
+    const address = user.addresses?.find((a) => a._id?.equals(addressId));
+    if (!address) throw new AppError('Address not found', 404);
+
+    user.addresses?.forEach((a) => {
+      a.isDefault = false;
+    });
+
+    address.isDefault = true;
+
+    await user.save();
+  },
+
+  deleteAddress: async (addressId: Address['_id'], userId: User['_id']): Promise<void> => {
+    const user = await userModel.findById(userId);
+    if (!user) throw new AppError('User not found', 404);
+
+    if (!user.addresses || user.addresses.length === 0) {
+      throw new AppError('User has no addresses', 400);
+    }
+
+    const address = user.addresses.find((a) => a._id?.equals(addressId));
+    if (!address) throw new AppError('Address not found', 404);
+
+    user.addresses = user.addresses.filter((a) => !a._id?.equals(addressId));
+
+    await user.save();
+  },
+
   banUser: async (id: string): Promise<void> => {
     const user = await userModel.findById(id);
     if (!user) {

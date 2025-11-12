@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { z } from 'zod';
 
 export const addressSchemaValidator = z.object({
@@ -32,5 +33,14 @@ export const createAddressSchema = z.object({
   }),
 });
 
-export type Address = z.infer<typeof addressSchemaValidator>;
+export const addressIdSchema = z.object({
+  params: z.object({
+    id: z.string().regex(/^[0-9a-fA-F]{24}$/, 'Invalid address ID'),
+  }),
+});
+
+export type Address = z.infer<typeof addressSchemaValidator> & {
+  _id?: mongoose.Types.ObjectId;
+};
 export type AddressInput = z.infer<typeof createAddressSchema>;
+export type AddressIdInput = z.infer<typeof addressIdSchema>;
