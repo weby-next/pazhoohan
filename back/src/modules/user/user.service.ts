@@ -1,7 +1,7 @@
 import { User } from './user.types.js';
 import { AppError } from '#src/middlewares/error-handler.js';
 import userModel from './user.model.js';
-import { Address } from './address/address.schema.js';
+import { Address, UpdateAddressInput } from './address/address.schema.js';
 import cities from '#src/assets/cities.json' with { type: 'json' };
 import provinces from '#src/assets/provinces.json' with { type: 'json' };
 import { Document } from 'mongoose';
@@ -65,6 +65,48 @@ export const userService = {
     await user.save();
   },
 
+  updateAddress: async (data: UpdateAddressInput['body'], addressId: Address['_id'], userId: User['_id']): Promise<void> => {
+    const user = await userModel.findById(userId);
+    if (!user) throw new AppError('User not found', 404);
+
+    if (!user.addresses?.length) throw new AppError('User has no addresses', 400);
+
+    const address = user.addresses.find((a) => a._id?.equals(addressId));
+    if (!address) throw new AppError('Address not found', 404);
+
+    if (data.name !== undefined) address.name = data.name;
+    if (data.postalCode !== undefined) address.postalCode = data.postalCode;
+    if (data.addressLine !== undefined) address.addressLine = data.addressLine;
+
+    if (data.provinceId !== undefined) {
+      const province = provinces.find((p) => p.id === data.provinceId);
+      if (!province) throw new AppError('Province not found', 404);
+      address.provinceId = data.provinceId;
+
+      if (data.cityId !== undefined) {
+        const city = cities.find((c) => c.id === data.cityId);
+        if (!city) throw new AppError('City not found', 404);
+
+        if (city.province_id !== province.id) {
+          throw new AppError('City does not belong to the selected province', 400);
+        }
+
+        address.cityId = data.cityId;
+      }
+    } else if (data.cityId !== undefined) {
+      const city = cities.find((c) => c.id === data.cityId);
+      if (!city) throw new AppError('City not found', 404);
+
+      const currentProvinceId = address.provinceId;
+      if (city.province_id !== currentProvinceId) {
+        throw new AppError('City does not belong to the selected province', 400);
+      }
+
+      address.cityId = data.cityId;
+    }
+
+    await user.save();
+  },
   banUser: async (id: string): Promise<void> => {
     const user = await userModel.findById(id);
     if (!user) {
