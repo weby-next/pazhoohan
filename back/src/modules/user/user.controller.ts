@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
 import { userService } from './user.service.js';
-import { UserIdInput } from './user.schema.js';
 import { AddressInput, AddressIdInput, UpdateAddressInput } from './address/address.schema.js';
 import mongoose from 'mongoose';
 
@@ -39,16 +38,5 @@ export const userController = {
     const resualt = await userService.updateAddress(req.body, addressId, user);
 
     res.success(resualt, 'Address updated successfully');
-  },
-
-  // todo_ Ban -> move to another dir
-  banUser: async (req: Request<UserIdInput['params']>, res: Response) => {
-    const user = await userService.banUser(req.params.id);
-    res.success(user, 'User banned successfully');
-  },
-
-  unbanUser: async (req: Request<UserIdInput['params']>, res: Response) => {
-    const user = await userService.unbanUser(req.params.id);
-    res.success(user, 'User Unbanned successfully');
   },
 };

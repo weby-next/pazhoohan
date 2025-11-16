@@ -5,12 +5,12 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 
-// import { ENV } from '#src/config/env.js';
 import { morganMiddleware } from '#src/middlewares/logger.js';
 import { AppError, errorHandler } from '#src/middlewares/error-handler.js';
 import healthcheckRoutes from '#src/modules/healthcheck/healthcheck.route.js';
 import userRoutes from '#src/modules/user/user.route.js';
 import authRoutes from '#src/modules/auth/auth.route.js';
+import userAdminRoutes from '#src/modules/user/admin/admin.route.js';
 import { successHandler } from './middlewares/success-handler.js';
 
 export const createApp = (): Express => {
@@ -36,6 +36,7 @@ export const createApp = (): Express => {
   app.get('/', (_req, res) => res.success('server started successfully'));
 
   app.use('/api', healthcheckRoutes);
+  app.use('/api/v1/admin', userAdminRoutes);
   app.use('/api/v1/users', userRoutes);
   app.use('/api/v1/auth', authRoutes);
 
