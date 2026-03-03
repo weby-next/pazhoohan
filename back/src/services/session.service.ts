@@ -1,4 +1,3 @@
-// src/services/session.service.ts
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import redis from '#src/config/redis.js';
@@ -15,7 +14,6 @@ type SessionMeta = {
   createdAt?: number;
   updatedAt?: number;
   expiresAt?: number;
-  // refreshHash is stored server-side and not returned to clients
   refreshHash?: string;
 };
 
@@ -26,7 +24,6 @@ const REFRESH_EXPIRES = Number(ENV.REFRESH_EXPIRES_IN || 604800);
 const REFRESH_TOKEN_BYTES = Number(ENV.REFRESH_TOKEN_BYTES || 48);
 const BCRYPT_SALT_ROUNDS = Number(ENV.SALT_ROUNDS || 10);
 
-/** helpers */
 const sessKey = (id: string) => `${SESSION_PREFIX}${id}`;
 const userSessionsKey = (userId: string) => `${USER_SESSIONS_PREFIX}${userId}`;
 
@@ -36,14 +33,12 @@ function cryptoRandomHex(n: number) {
   return crypto.randomBytes(n).toString('hex');
 }
 
-/** hash/compare */
 const hashToken = async (token: string) => {
   const salt = await bcrypt.genSalt(BCRYPT_SALT_ROUNDS);
   return bcrypt.hash(token, salt);
 };
 const compareHash = (token: string, hash: string) => bcrypt.compare(token, hash);
 
-/** public API */
 export const sessionService = {
   /**
    * createSession:
