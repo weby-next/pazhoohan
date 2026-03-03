@@ -7,7 +7,7 @@ interface AuthenticatedRequest extends Request {
 }
 
 export const authorizeRole =
-  (...allowedRoles: Array<'customer' | 'seller' | 'admin'>) =>
+  (...allowedRoles: Array<'owner' | 'teacher' | 'admin' | 'model'>) =>
   (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
     if (!req.user) {
       return next(new AppError('Unauthorized: No user in request', 401));

@@ -5,7 +5,7 @@ export interface User extends Document {
   fullName: string;
   phone: string;
   email: string;
-  role: ['customer' | 'seller' | 'admin'];
+  role: ['owner' | 'teacher' | 'admin' | 'model'];
   addresses?: Address[];
   status: 'active' | 'banned';
 }
