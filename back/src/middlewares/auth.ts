@@ -15,7 +15,7 @@ const authMiddleware = async (req: Request, _res: Response, next: NextFunction) 
 
     const user = await userModel.findById(decoded.sub);
     if (!user) throw new AppError('User not found', 404);
-    if (user.status === 'banned') throw new AppError('This user has been banned', 403);
+    if (user.status === 'rejected') throw new AppError('This user has been rejected', 403);
 
     req.user = user;
     next();
