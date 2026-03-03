@@ -51,7 +51,7 @@ export const authService = {
 
     let user = await userModel.findOne({ phone });
     if (!user) {
-      user = await userModel.create({ fullName: phone, phone, role: ['customer'], status: 'active' } as any);
+      user = await userModel.create({ fullName: phone, phone, role: ['model'], status: 'active' } as any);
     }
 
     return { message: 'OTP verified', user };
