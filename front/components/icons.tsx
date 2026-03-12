@@ -1,6 +1,29 @@
 import * as React from "react";
 
 import { IconSvgProps } from "@/types";
+import Image from "next/image";
+import { useTheme } from "next-themes";
+
+interface DynamicLogoProps {
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export const DynamicLogo: React.FC<DynamicLogoProps> = ({
+  width,
+  height,
+  alt,
+}) => {
+  const { theme } = useTheme();
+
+  const logoSrc =
+    theme === "dark"
+      ? "/logos/lumine_dark_bg.svg"
+      : "/logos/lumine_light_bg.svg";
+
+  return <Image src={logoSrc} alt={alt} width={width} height={height} />;
+};
 
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,

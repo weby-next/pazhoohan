@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar as HeroUINavbar,
   NavbarContent,
@@ -24,7 +26,15 @@ import {
   HeartFilledIcon,
   SearchIcon,
   Logo,
+  DynamicLogo,
 } from "@/components/icons";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Ellipse,
+  Ellipsis,
+} from "lucide-react";
 
 export const Navbar = () => {
   const searchInput = (
@@ -34,13 +44,8 @@ export const Navbar = () => {
         inputWrapper: "bg-default-100",
         input: "text-sm",
       }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
       labelPlacement="outside"
-      placeholder="Search..."
+      placeholder="جستجو کنید ..."
       startContent={
         <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
       }
@@ -49,67 +54,49 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
-          </NextLink>
-        </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
-        </ul>
-      </NavbarContent>
-
+    <HeroUINavbar
+      maxWidth="full"
+      position="sticky"
+      className="border-b border-b-divider dark:border-border-default-dark border-border-default-light"
+    >
       <NavbarContent
         className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
+        justify="start"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal aria-label="Discord" href={siteConfig.links.discord}>
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Sponsor
-          </Button>
-        </NavbarItem>
+        <Button
+          isIconOnly
+          size="lg"
+          variant="shadow"
+          color="primary"
+          radius="lg"
+          className="border border-border-default-light dark:border-border-default-dark"
+        >
+          <ChevronRight />
+        </Button>
+        <Button
+          isIconOnly
+          size="lg"
+          variant="shadow"
+          color="primary"
+          radius="lg"
+          className="border border-border-default-light dark:border-border-default-dark"
+        >
+          <ChevronLeft />
+        </Button>
       </NavbarContent>
 
+      <NavbarContent justify="center">
+        <h2 className="text-2xl">عنوان صفحه</h2>
+      </NavbarContent>
+
+      <NavbarContent justify="end">
+        <Ellipsis />
+        <GithubIcon />
+        <ThemeSwitch />
+      </NavbarContent>
+
+      {/* mobile */}
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

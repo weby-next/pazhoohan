@@ -40,14 +40,6 @@ const hashToken = async (token: string) => {
 const compareHash = (token: string, hash: string) => bcrypt.compare(token, hash);
 
 export const sessionService = {
-  /**
-   * createSession:
-   *  - creates sessionId
-   *  - generates refresh raw token and stores only its bcrypt hash in Redis
-   *  - stores session metadata under sess:{sessionId} with TTL = REFRESH_EXPIRES
-   *  - adds sessionId to user:sessions:{userId} set
-   * returns { sessionId, refreshRaw }
-   */
   createSession: async (
     userId: string,
     meta: { ip?: string; ua?: string; device?: string } = {},
@@ -79,15 +71,6 @@ export const sessionService = {
     return { sessionId, refreshRaw, expiresIn: REFRESH_EXPIRES };
   },
 
-  /**
-   * validateAndRotate:
-   *  - token input is expected to be "<sessionId>.<refreshRaw>" OR { sessionId, refreshRaw } pair
-   *  - checks session exists
-   *  - bcrypt compare raw with stored hash
-   *  - if valid -> rotate: generate new raw+hash, update sess:{sessionId} and reset TTL
-   *  - if invalid -> treat as possible reuse -> revoke all user sessions and throw
-   * returns { userId, sessionId, newRefreshRaw }
-   */
   validateAndRotate: async (input: { token?: string; sessionId?: string; refreshRaw?: string }) => {
     let sessionId = input.sessionId;
     let refreshRaw = input.refreshRaw;
@@ -103,26 +86,22 @@ export const sessionService = {
     const key = sessKey(sessionId);
     const raw = await redis.get(key);
     if (!raw) {
-      // session not found
       throw new AppError('Refresh token invalid or session expired', 401);
     }
 
     const sess: SessionMeta = JSON.parse(raw);
     if (!sess.refreshHash) {
-      // corrupt session
       await sessionService.revokeSession(sessionId);
       throw new AppError('Session corrupted', 401);
     }
 
     const ok = await compareHash(refreshRaw, sess.refreshHash);
     if (!ok) {
-      // possible token reuse or tampering. Revoke all sessions for this user.
       logger.warn('refresh.reuse_or_invalid', { userId: sess.userId, sessionId });
       await sessionService.revokeAllUserSessions(sess.userId);
       throw new AppError('Refresh token reuse detected. All sessions revoked.', 401);
     }
 
-    // valid -> rotate
     const newRaw = genRefreshRaw();
     const newHash = await hashToken(newRaw);
     sess.refreshHash = newHash;
@@ -136,11 +115,6 @@ export const sessionService = {
     return { userId: sess.userId, sessionId, newRefreshRaw: newRaw, expiresIn: REFRESH_EXPIRES };
   },
 
-  /**
-   * revokeSession:
-   *  - deletes sess:{id}
-   *  - removes id from user:sessions:{userId} if can read userId
-   */
   revokeSession: async (sessionId: string) => {
     const key = sessKey(sessionId);
     const raw = await redis.get(key);
@@ -152,12 +126,6 @@ export const sessionService = {
     logger.info('session.revoked', { sessionId });
   },
 
-  /**
-   * revokeAllUserSessions:
-   *  - reads all sessionIds from user:sessions:{userId}
-   *  - deletes all sess:{id} in multi
-   *  - deletes the user:sessions set
-   */
   revokeAllUserSessions: async (userId: string) => {
     const setKey = userSessionsKey(userId);
     const ids = await redis.smembers(setKey);
@@ -169,10 +137,6 @@ export const sessionService = {
     logger.info('session.revoke_all', { userId, count: ids.length });
   },
 
-  /**
-   * getSessionsForUser:
-   *  - returns array of session metadata (excluding refreshHash)
-   */
   getSessionsForUser: async (userId: string) => {
     const ids = await redis.smembers(userSessionsKey(userId));
     if (!ids.length) return [];
@@ -191,9 +155,6 @@ export const sessionService = {
     return sessions;
   },
 
-  /**
-   * helper to parse token string "<sessionId>.<refreshRaw>"
-   */
   parseCompoundToken: (compound: string) => {
     if (!compound) return null;
     const idx = compound.indexOf('.');

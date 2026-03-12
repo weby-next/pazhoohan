@@ -102,11 +102,6 @@ const userSchema = new mongoose.Schema<UserDocument>(
       enum: ['model', 'instructor'],
       required: true,
     },
-    primaryCategory: {
-      type: String,
-      enum: ['fashion', 'sportswear', 'formal', 'casual', 'runway', 'editorial', 'beauty', 'others'], // لیست محدود شده
-      required: true,
-    },
     categories: {
       type: [String],
       enum: ['fashion', 'sportswear', 'formal', 'casual', 'runway', 'editorial', 'beauty', 'others'],

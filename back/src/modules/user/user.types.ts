@@ -3,7 +3,26 @@ import { Document } from 'mongoose';
 export type UserRole = 'model' | 'instructor';
 export type UserStatus = 'active' | 'rejected' | 'pending_review';
 export type WorkSituation = 'unemployed' | 'student' | 'employed' | 'other';
-export type Category = 'fashion' | 'sportswear' | 'formal' | 'casual' | 'runway' | 'editorial' | 'beauty' | 'others';
+export type Category =
+  | 'fashion'
+  | 'sportswear_men'
+  | 'sportswear_women'
+  | 'formal_men'
+  | 'formal_women'
+  | 'casual'
+  | 'editorial'
+  | 'advertisement'
+  | 'beauty'
+  | 'product'
+  | 'lifestyle'
+  | 'lookbook'
+  | 'streetwear'
+  | 'underwear'
+  | 'accessories'
+  | 'runway'
+  | 'campaign'
+  | 'ecommerce'
+  | 'others';
 
 export interface UserDocument extends Document {
   phone: string;
