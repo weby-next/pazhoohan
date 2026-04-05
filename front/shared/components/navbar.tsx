@@ -12,8 +12,8 @@ import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
 
 import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, SearchIcon } from "@/components/icons";
+import { ThemeSwitch } from "@/shared/components/theme-switch";
+import { GithubIcon, SearchIcon } from "@/shared/components/icons";
 import {
   ChevronDown,
   ChevronLeft,

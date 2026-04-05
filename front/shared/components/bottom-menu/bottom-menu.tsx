@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { BottomMenuLink } from "./bottom-menu-link";
-import { getBottomNavItems } from "@/lib/navigation";
+import { getBottomNavItems } from "@/shared/lib/navigation";
 import NextLink from "next/link";
 import { User } from "lucide-react";
 

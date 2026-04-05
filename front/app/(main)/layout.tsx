@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/shared/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@heroui/link";
 import clsx from "clsx";
@@ -7,9 +7,9 @@ import { Providers } from "../providers";
 
 import { siteConfig } from "@/config/site";
 import { sfBold, sfLight, sfMed } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
-import { Sidebar } from "@/components/sidebar/sidebar";
-import { BottomMenu } from "@/components/bottom-menu/bottom-menu";
+import { Navbar } from "@/shared/components/navbar";
+import { Sidebar } from "@/shared/components/sidebar/sidebar";
+import { BottomMenu } from "@/shared/components/bottom-menu/bottom-menu";
 
 export const metadata: Metadata = {
   title: {
