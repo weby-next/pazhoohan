@@ -3,7 +3,6 @@ import React from "react";
 type BaseNavMenuItem = {
   label: string;
   icon: React.ReactNode;
-  gradient: string;
 };
 
 type LinkNavMenuItem = BaseNavMenuItem & {

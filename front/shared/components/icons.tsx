@@ -22,7 +22,14 @@ export const DynamicLogo: React.FC<DynamicLogoProps> = ({
       ? "/logos/lumine_dark_bg.svg"
       : "/logos/lumine_light_bg.svg";
 
-  return <Image src={logoSrc} alt={alt} width={width} height={height} />;
+  return (
+    <Image
+      src={"/logos/lumine_light_bg.svg"}
+      alt={alt}
+      width={width}
+      height={height}
+    />
+  );
 };
 
 export const Logo: React.FC<IconSvgProps> = ({

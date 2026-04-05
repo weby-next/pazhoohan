@@ -25,13 +25,11 @@ export const siteConfig = {
       href: "/",
       icon: <HomeIcon />,
       type: "link",
-      gradient: "linear-gradient(135deg,#0a84ff,#5e5ce6)",
     },
     {
       label: "پروژه ها",
       icon: <Briefcase />,
       type: "dropdown",
-      gradient: "linear-gradient(135deg,#30d158,#40c8e0)",
       items: [
         {
           label: "همه",
@@ -40,22 +38,22 @@ export const siteConfig = {
         },
         {
           label: "جاری",
-          href: "/projects/",
+          href: "/projects/1",
           icon: <Activity />,
         },
         {
           label: "در انتظار",
-          href: "/projects/",
+          href: "/projects/2",
           icon: <Clock />,
         },
         {
           label: "انجام شده",
-          href: "/projects/",
+          href: "/projects/3",
           icon: <CheckCircle />,
         },
         {
           label: "لغو شده",
-          href: "/projects/",
+          href: "/projects/4",
           icon: <XCircle />,
         },
       ],
@@ -64,7 +62,6 @@ export const siteConfig = {
       label: "اعلانات",
       icon: <Bell />,
       type: "dropdown",
-      gradient: "linear-gradient(135deg,#ff9f0a,#ffd60a)",
       items: [
         {
           label: "همه",
@@ -73,12 +70,12 @@ export const siteConfig = {
         },
         {
           label: "خوانده نشده",
-          href: "/notifications",
+          href: "/notifications/1",
           icon: <BellDot />,
         },
         {
           label: "خوانده شده",
-          href: "/notifications",
+          href: "/notifications/2",
           icon: <CheckCircle />,
         },
       ],
@@ -88,7 +85,6 @@ export const siteConfig = {
       href: "/messages",
       icon: <MessageCircle />,
       type: "link",
-      gradient: "linear-gradient(135deg,#ff375f,#ff453a)",
     },
   ] as NavMenuItem[],
 

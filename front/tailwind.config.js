@@ -86,59 +86,58 @@ const config = {
         borderStrongLight: "#B8B8BE",
 
         /* =========================
-           PRIMARY BRAND (Fashion Gold)
+           PRIMARY BRAND (Royal Blue)
         ========================= */
 
-        primaryDark: "#D4A94A",
-        primaryLight: "#B88A28",
+        brand: "#2563EB",
 
-        primaryHoverDark: "#E2B85C",
-        primaryHoverLight: "#9F741F",
+        primaryHoverDark: "#3B82F6",
+        primaryHoverLight: "#1D4ED8",
 
-        primaryMutedDark: "#3B321B",
-        primaryMutedLight: "#F3E8C8",
+        primaryMutedDark: "#1E3A8A",
+        primaryMutedLight: "#DBEAFE",
 
         /* =========================
-           SECONDARY BRAND (Creative Plum)
+           SECONDARY BRAND (Creative Purple)
         ========================= */
 
-        secondaryDark: "#7A3E6D",
-        secondaryLight: "#9B4E8A",
+        secondaryDark: "#8B5CF6",
+        secondaryLight: "#7C3AED",
 
-        secondaryHoverDark: "#8C4B7E",
-        secondaryHoverLight: "#823C72",
+        secondaryHoverDark: "#A78BFA",
+        secondaryHoverLight: "#6D28D9",
 
-        secondaryMutedDark: "#2D1B2A",
-        secondaryMutedLight: "#F3E5F0",
+        secondaryMutedDark: "#2B2148",
+        secondaryMutedLight: "#EFE9FF",
 
         /* =========================
            ACCENT (Highlight / CTA)
         ========================= */
 
-        accentDark: "#4F7DF3",
-        accentLight: "#3F6AE0",
+        accentDark: "#60A5FA",
+        accentLight: "#3B82F6",
 
-        accentHoverDark: "#6A93FF",
-        accentHoverLight: "#3558C2",
+        accentHoverDark: "#93C5FD",
+        accentHoverLight: "#2563EB",
 
-        accentMutedDark: "#1E2A48",
-        accentMutedLight: "#E5ECFF",
+        accentMutedDark: "#1E293B",
+        accentMutedLight: "#E0ECFF",
 
         /* =========================
            FEEDBACK COLORS
         ========================= */
 
-        successDark: "#3FAF7A",
-        successLight: "#2F9E6C",
+        successDark: "#34D399",
+        successLight: "#10B981",
 
-        warningDark: "#E6A23C",
-        warningLight: "#D48F22",
+        warningDark: "#FBBF24",
+        warningLight: "#F59E0B",
 
-        errorDark: "#E05252",
-        errorLight: "#C93C3C",
+        errorDark: "#F87171",
+        errorLight: "#EF4444",
 
-        infoDark: "#4F8BFF",
-        infoLight: "#3E72E0",
+        infoDark: "#60A5FA",
+        infoLight: "#3B82F6",
 
         /* =========================
            OVERLAY / BACKDROP
@@ -148,8 +147,9 @@ const config = {
         overlayLight: "rgba(0,0,0,0.35)",
 
         /* =========================
-           ANY COLOR
+           SYSTEM COLORS
         ========================= */
+
         blue: "#0a84ff",
         green: "#30d158",
         indigo: "#5e5ce6",
@@ -171,7 +171,7 @@ const config = {
             foreground: "#111111",
             card: "#FFFFFF",
             divider: "#E2E2E6",
-            primary: "#F1F1F1",
+            primary: "#2563EB",
           },
         },
         dark: {
@@ -180,7 +180,7 @@ const config = {
             foreground: "#F5F5F5",
             card: "#18181B",
             divider: "#2C2C30",
-            primary: "#1F1F22",
+            primary: "#2563EB",
           },
         },
       },

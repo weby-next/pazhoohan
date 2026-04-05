@@ -4,4 +4,5 @@ export type SidebarInfoProps = {
   level: string;
   rule: string;
   justify: "start" | "end";
+  href: string;
 };
