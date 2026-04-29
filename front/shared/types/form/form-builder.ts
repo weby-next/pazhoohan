@@ -7,12 +7,12 @@ export interface FieldOption {
 export interface FieldConfig {
   name: string;
   label: string;
-
   type:
     | "text"
     | "email"
     | "password"
     | "textarea"
+    | "otp"
     | "select"
     | "number"
     | "checkbox"
@@ -21,13 +21,14 @@ export interface FieldConfig {
 
   placeholder?: string;
   defaultValue?: any;
-
   options?: FieldOption[];
-
   required?: boolean;
   disabled?: boolean;
-
   description?: string;
-
   className?: string;
+
+  maxLength?: number;
+  pattern?: string;
+
+  onComplete?: (value: string) => void;
 }

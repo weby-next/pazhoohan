@@ -1,10 +1,18 @@
 "use client";
 
 import React from "react";
-import { FieldValues, Path, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  SubmitHandler,
+  useForm,
+  Controller,
+} from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldConfig } from "@/types/form/form-builder";
+import { FieldConfig } from "@/shared/types/form/form-builder";
+import { Button, Input, InputOTP, TextArea, TextField } from "@heroui/react";
+import { Controlled } from "@/features/auth/funcs/otp_timer";
 
 export interface FormConfig<TSchema extends z.ZodObject<any, any>> {
   fields: FieldConfig[];
@@ -25,7 +33,9 @@ function FormBuilder<TSchema extends z.ZodTypeAny>({
 
   const {
     register,
+    control,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<any>({
     resolver: zodResolver(schema),
@@ -39,23 +49,24 @@ function FormBuilder<TSchema extends z.ZodTypeAny>({
       <div key={field.name} className="mb-4">
         <label
           htmlFor={field.name}
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark"
         >
           {field.label}
-          {field.required && <span className="text-red-500"> *</span>}
         </label>
 
         {field.type === "textarea" && (
-          <textarea
+          <TextArea
             id={field.name}
             {...register(name)}
             placeholder={field.placeholder}
             disabled={field.disabled}
-            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm ${
+            className={`mt-1 block w-full rounded-md ${
               errorMessage ? "border-red-500" : ""
             }`}
           />
         )}
+
+        {field.type === "otp" && <Controlled />}
 
         {field.type === "select" && field.options && (
           <select
@@ -66,7 +77,7 @@ function FormBuilder<TSchema extends z.ZodTypeAny>({
               errorMessage ? "border-red-500" : ""
             }`}
           >
-            {field.options.map((option) => (
+            {field.options.map((option: any) => (
               <option
                 key={option.value}
                 value={option.value}
@@ -79,23 +90,24 @@ function FormBuilder<TSchema extends z.ZodTypeAny>({
         )}
 
         {["text", "email", "number", "password"].includes(field.type) && (
-          <input
-            id={field.name}
-            type={field.type}
-            {...register(name)}
-            placeholder={field.placeholder}
-            disabled={field.disabled}
-            className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm ${
-              errorMessage ? "border-red-500" : ""
-            }`}
-          />
+          <TextField>
+            <Input placeholder="0912-000-0000" />
+          </TextField>
+          // <Input
+          //   id={field.name}
+          //   size="lg"
+          //   type={field.type}
+          //   radius="full"
+          //   {...register(name)}
+          //   placeholder={field.placeholder}
+          //   disabled={field.disabled}
+          //   className={`mt-1 block w-full border-gray-300 ${
+          //     errorMessage ? "border-red-500" : ""
+          //   }`}
+          // />
         )}
 
-        {field.description && (
-          <p className="text-gray-500 text-xs mt-1">{field.description}</p>
-        )}
-
-        {errorMessage && (
+        {errorMessage && field.type !== "otp" && (
           <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
         )}
       </div>
@@ -107,13 +119,9 @@ function FormBuilder<TSchema extends z.ZodTypeAny>({
       {fields.map(renderField)}
 
       <div className="flex justify-end">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 disabled:opacity-50"
-        >
-          {isSubmitting ? "Processing..." : submitButtonText}
-        </button>
+        <Button fullWidth type="submit">
+          {isSubmitting ? "درحال پردازش ..." : submitButtonText}
+        </Button>
       </div>
     </form>
   );
