@@ -4,27 +4,32 @@ export interface FieldOption {
   disabled?: boolean;
 }
 
+export type FieldType =
+  | "text"
+  | "email"
+  | "password"
+  | "textarea"
+  | "otp"
+  | "select"
+  | "number"
+  | "checkbox"
+  | "radio"
+  | "date";
+
 export interface FieldConfig {
   name: string;
   label: string;
-  type:
-    | "text"
-    | "email"
-    | "password"
-    | "textarea"
-    | "otp"
-    | "select"
-    | "number"
-    | "checkbox"
-    | "radio"
-    | "date";
+  type: FieldType;
 
   placeholder?: string;
+  description?: string;
+
   defaultValue?: any;
   options?: FieldOption[];
+
   required?: boolean;
   disabled?: boolean;
-  description?: string;
+
   className?: string;
 
   maxLength?: number;

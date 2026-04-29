@@ -4,6 +4,7 @@ import FormBuilder from "@/shared/components/form/form-builder";
 import { auth_1FieldConfigPhone } from "../configs/auth_1";
 import { auth_1SchemaPhone } from "../schemas/auth_1";
 import { Divider } from "@heroui/divider";
+import { Surface } from "@heroui/react";
 
 export const PhoneForm = () => {
   const onSubmit = () => {
@@ -11,7 +12,7 @@ export const PhoneForm = () => {
   };
 
   return (
-    <div className="bg-base-light z-[9999] w-[25rem] p-6 dark:bg-base-dark shadow-2xl rounded-4xl">
+    <Surface variant="secondary" className="w-sm p-4 rounded-4xl">
       <p className="text-primary">
         وقتشه بیای جلوی دوربین ، پول دربیاری و بدرخشی !
       </p>
@@ -27,6 +28,6 @@ export const PhoneForm = () => {
         ورود و ثبت‌نام در لومینه به معنای پذیرش شرایط و مقررات و قوانین حریم
         خصوصی است.
       </p>
-    </div>
+    </Surface>
   );
 };

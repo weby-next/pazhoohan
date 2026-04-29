@@ -5,10 +5,10 @@ export const auth_1FieldConfigPhone: FieldConfig[] = [
     name: "phone_number",
     label: "لطفا شماره تلفن خود را وارد کنید",
     type: "text",
-    placeholder: "شماره تلفن",
+    placeholder: "0912-000-0000",
     required: true,
     description: "شماره تماس با 09 شروع میشود و 11 رقم دارد",
-    className: "w-[20rem]",
+    className: "text-center my-2",
   },
 ];
 
