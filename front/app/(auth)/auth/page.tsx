@@ -1,4 +1,4 @@
-import { PhoneForm } from "@/features/auth/components/phone_form";
+import { PhoneForm } from "@/features/auth/components/phone-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

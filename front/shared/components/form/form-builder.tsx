@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z, ZodObject } from "zod";
+import { boolean, z, ZodObject } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, Button } from "@heroui/react";
 import { renderField } from "./renderField";
@@ -15,6 +15,8 @@ export interface FormConfig<TSchema extends ZodObject<any>> {
   onSubmit: (data: z.infer<TSchema>) => void | Promise<void>;
 
   submitButtonText?: string;
+
+  twoColumns?: boolean;
 }
 
 function FormBuilder<TSchema extends ZodObject<any>>({
@@ -22,6 +24,7 @@ function FormBuilder<TSchema extends ZodObject<any>>({
   schema,
   onSubmit,
   submitButtonText = "Submit",
+  twoColumns = false,
 }: FormConfig<TSchema>) {
   type FormValues = z.infer<TSchema>;
 
@@ -40,7 +43,11 @@ function FormBuilder<TSchema extends ZodObject<any>>({
 
   return (
     <Form onSubmit={handleSubmit(submitHandler)}>
-      <div className="flex flex-col gap-4">
+      <div
+        className={`grid gap-4 ${
+          twoColumns ? "md:grid-cols-2" : "grid-cols-1"
+        }`}
+      >
         {fields.map((field) => renderField(field, control))}
       </div>
 

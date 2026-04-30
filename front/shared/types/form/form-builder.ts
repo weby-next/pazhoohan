@@ -20,6 +20,7 @@ export interface FieldConfig {
   name: string;
   label: string;
   type: FieldType;
+  [key: string]: any;
 
   placeholder?: string;
   description?: string;
