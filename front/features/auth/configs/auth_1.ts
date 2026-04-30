@@ -21,5 +21,7 @@ export const auth_1FieldConfigOtp: FieldConfig[] = [
     description:
       "در صورت عدم دریافت کد، پوشه هرزنامه (spam) خود را بررسی کنید.",
     maxLength: 6,
+    className: "flex mt-2 justify-center",
+    timerSeconds: 10,
   },
 ];

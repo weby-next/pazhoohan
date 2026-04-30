@@ -36,4 +36,7 @@ export interface FieldConfig {
   pattern?: string;
 
   onComplete?: (value: string) => void;
+
+  onResend?: (value: string) => void;
+  timerSeconds?: number;
 }
